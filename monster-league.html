@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#152d35">
+<title>Pocketgrove — The Eight Badge Challenge</title>
+<style>
+:root{color-scheme:dark;--ink:#102a30;--paper:#eff5d5;--mint:#a4db95;--muted:#8ba5a5;--gold:#f4ce79}
+*{box-sizing:border-box}body{margin:0;background:#101e25;color:var(--paper);font-family:"Space Mono",Consolas,monospace;font-size:13px;background-image:radial-gradient(ellipse at 30% 0,#213c43,transparent 65%);min-height:100vh}button{font:inherit;cursor:pointer}button:disabled{cursor:not-allowed;opacity:.42}button:focus-visible{outline:3px solid var(--gold);outline-offset:3px}header{max-width:1360px;margin:auto;padding:26px 30px 21px;display:flex;justify-content:space-between;align-items:center}.brand{font-size:22px;letter-spacing:-1px;font-weight:bold}.brand span{color:var(--mint)}.eyebrow{font-size:10px;color:var(--mint);letter-spacing:2px;margin-bottom:7px}.tag{border:1px solid #49605a;border-radius:4px;padding:8px 12px;font-size:11px;color:#b6c8b7}.app{max-width:1360px;margin:auto;padding:0 30px 25px;display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:20px}.screen-shell{background:#20363c;border:1px solid #41564f;padding:10px;box-shadow:0 16px 55px #0004;border-radius:10px}.screen-top{display:flex;justify-content:space-between;padding:4px 5px 12px;font-size:10px;color:#a4b7ac;letter-spacing:1px}.live{color:var(--mint)}.viewport{position:relative;overflow:hidden;border-radius:3px;background:#9cc879;aspect-ratio:8/5}canvas{display:block;width:100%;height:100%;image-rendering:pixelated}.area-label{position:absolute;top:16px;left:16px;background:#102a30e8;padding:10px 14px;border-left:3px solid var(--gold);pointer-events:none}.area-label strong{font-size:12px}.area-label small{display:block;color:#adc7b0;font-size:9px;margin-top:4px}.help{padding:13px 6px 4px;display:flex;justify-content:space-between;gap:8px;color:#b3c1b5;font-size:10px}.key{background:#304b4f;border:1px solid #56706a;padding:2px 5px;border-radius:3px;color:#e1eac8}.panel{background:#1a2c33;border:1px solid #344b4d;padding:18px;border-radius:7px;margin-bottom:14px}.panel-title{font-size:10px;color:#9eb4ab;letter-spacing:1.7px;margin:0 0 15px}.journey{display:flex;justify-content:space-between;align-items:center}.journey strong{font-size:23px;color:var(--gold)}.progress{height:5px;background:#33494a;margin:13px 0 16px}.progress i{height:100%;display:block;background:var(--gold);transition:width .4s}.badges{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.badge{border:1px solid #3c5355;background:#14262d;text-align:center;padding:9px 0;filter:grayscale(1);opacity:.4}.badge.earned{filter:none;opacity:1;border-color:var(--gold);background:#394334}.badge span{display:block;font-size:22px}.badge small{font-size:8px;display:block;margin-top:5px}.monster-card{padding:10px 0;border-bottom:1px solid #33464b}.monster-card:last-child{border-bottom:0}.monster-head{display:flex;justify-content:space-between;align-items:center}.monster-name{font-weight:bold;font-size:12px}.type{font-size:9px;color:var(--mint)}.hp{height:5px;background:#0d2027;margin:9px 0 6px}.hp i{display:block;height:100%;background:#9bd289}.stats{display:flex;justify-content:space-between;font-size:9px;color:#9bb2a9}.btn{border:1px solid #526c61;background:#2c4543;color:var(--paper);padding:11px 13px;border-radius:3px;transition:background .15s}.btn:hover:not(:disabled){background:#416255}.btn.primary{background:var(--gold);color:#253632;border-color:var(--gold);font-weight:bold}.btn.primary:hover{background:#ffe3a4}.btn.wide{width:100%}.actions{display:flex;gap:8px;margin-top:14px}.actions .btn{flex:1;font-size:10px;padding:10px 5px}.log{min-height:85px;color:#c4d5bd;font-size:11px;line-height:1.8}.tip{font-size:10px;line-height:1.8;color:#8fa89f}.bottom{padding:15px 3px;display:flex;justify-content:space-between;align-items:center;color:#91a69d;font-size:10px}.bottom button{background:none;border:0;color:#9fb7ab;font-size:10px;text-decoration:underline}.overlay{position:absolute;inset:0;background:#10252bf0;display:flex;align-items:center;justify-content:center;padding:22px;z-index:4}.overlay.hidden{display:none}.welcome{max-width:660px;text-align:center}.welcome h1{font-size:clamp(21px,3vw,38px);letter-spacing:-2px;line-height:1.25;margin:12px 0 16px}.welcome p{color:#adc2af;line-height:1.8;font-size:12px;max-width:490px;margin:0 auto 18px}.starters{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.starter{color:var(--paper);border:1px solid #537067;background:#263e40;padding:15px 8px 13px;border-radius:5px}.starter:hover{background:#3c5550;border-color:var(--gold);transform:translateY(-3px)}.starter canvas{width:96px;height:96px;margin:auto}.starter strong,.starter small{display:block}.starter small{font-size:9px;margin-top:8px;color:#b6ceae}.battle{position:absolute;inset:0;z-index:3;display:flex;flex-direction:column;background:#a6c889}.battle.hidden{display:none}.battle-field{flex:1;position:relative;min-height:0;background:linear-gradient(#a9d8cc 0%,#d4e2b2 62%,#a4c57b 62%)}.battle-field:before{content:"";position:absolute;width:65%;height:15%;right:-5%;top:10%;background:#e5efd055;border-radius:50%}.battle-canvas{position:absolute;inset:0}.health-box{position:absolute;background:#f0f0d5;color:#254039;border:3px solid #49664b;box-shadow:4px 4px #4d694b55;padding:10px 14px;width:42%;z-index:1}.health-box.enemy{left:5%;top:10%}.health-box.ally{right:5%;bottom:7%}.health-box strong{font-size:13px}.health-box .level{float:right;font-size:10px}.health-box .hp{background:#bcc5a1;height:7px;margin:8px 0 5px}.health-box small{font-size:9px}.battle-bottom{background:#eff0d5;color:#263d35;border-top:5px solid #3c5b49;padding:17px;min-height:145px}.battle-message{font-size:12px;line-height:1.7;min-height:37px;margin-bottom:12px}.battle-controls{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.battle-controls .btn{font-size:10px;padding:10px 5px}.battle-controls .move{background:#d8e2b8;color:#294536;border-color:#8ea47b}.battle-controls .move small{display:block;font-size:8px;margin-top:5px;color:#52684c}.touch{display:flex;gap:7px;align-items:center}.touch .btn{padding:9px 14px}.toast{position:absolute;bottom:15px;left:50%;transform:translateX(-50%);padding:10px 16px;background:#142c31ed;color:var(--paper);font-size:11px;width:max-content;max-width:90%;text-align:center;pointer-events:none;z-index:2}.toast:empty{display:none}
+@media(max-width:1000px){.app{grid-template-columns:minmax(0,1fr) 235px;gap:12px;padding:0 15px}.panel{padding:13px}.help{flex-wrap:wrap}.brand{font-size:19px}header{padding:20px 17px}}@media(max-width:760px){.app{display:block}.sidebar{display:grid;grid-template-columns:1fr 1fr;gap:12px}.panel{margin-bottom:0}.sidebar .panel:last-child{grid-column:1/-1}.viewport{aspect-ratio:4/3}.screen-shell{padding:6px}.health-box{padding:7px 9px}.health-box strong{font-size:10px}.battle-bottom{padding:10px;min-height:140px}.battle-message{font-size:10px}.battle-controls{gap:4px}.battle-controls .btn{font-size:9px}.welcome p{font-size:10px;margin-bottom:12px}.welcome h1{margin:7px 0 10px}.starter{padding:8px 3px}.starter canvas{width:65px;height:65px}.starters{gap:6px}.starter strong{font-size:10px}.starter small{font-size:8px}.tag{display:none}.overlay{padding:12px}.bottom{gap:12px;flex-wrap:wrap}.area-label{top:9px;left:9px;padding:7px 10px}.touch .btn{padding:10px 15px}.sidebar .tip{display:none}}@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+.sound-bar{display:flex;align-items:center;gap:12px;margin-top:14px;padding:11px 14px;background:#1a2c33;border:1px solid #344b4d;border-radius:5px;color:#a9c3ae;font-size:10px}.sound-bar .btn{padding:7px 10px;font-size:10px}.sound-bar label{display:flex;align-items:center;gap:8px}.sound-bar input{width:85px;accent-color:var(--gold)}#music-label{margin-left:auto;color:var(--gold)}.hp i{transition:width .45s ease-out}.battle:not(.hidden){animation:battle-arrive .55s ease-out}.health-box.enemy{animation:box-left .5s ease-out}.health-box.ally{animation:box-right .5s ease-out}.starter canvas{animation:starter-float 2s ease-in-out infinite}.starter:nth-child(2) canvas{animation-delay:-.6s}.starter:nth-child(3) canvas{animation-delay:-1.2s}.badge.new-badge{animation:badge-pop 1s ease-out}.battle-field:before{animation:cloud-drift 18s ease-in-out infinite alternate}
+@keyframes battle-arrive{from{opacity:0;clip-path:inset(45% 0)}to{opacity:1;clip-path:inset(0)}}@keyframes box-left{from{transform:translateX(-80px);opacity:0}to{transform:translateX(0);opacity:1}}@keyframes box-right{from{transform:translateX(80px);opacity:0}to{transform:translateX(0);opacity:1}}@keyframes starter-float{50%{transform:translateY(-7px)}}@keyframes badge-pop{0%{transform:scale(.5);box-shadow:0 0 0 0 #f4ce79}45%{transform:scale(1.18);box-shadow:0 0 24px 8px #f4ce7966}100%{transform:scale(1)}}@keyframes cloud-drift{to{transform:translateX(-90px)}}
+@media(max-width:760px){.sound-bar{gap:8px;flex-wrap:wrap}#music-label{font-size:8px}.sound-bar input{width:65px}}
+@media(prefers-reduced-motion:reduce){*,*:before{animation:none!important;transition:none!important}}
+body{background-color:#0c1b20;background-image:radial-gradient(ellipse at 15% 0,#29473e88,transparent 50%),radial-gradient(ellipse at 95% 50%,#27354666,transparent 50%),linear-gradient(#bce2ac03 1px,transparent 1px),linear-gradient(90deg,#bce2ac03 1px,transparent 1px);background-size:auto,auto,32px 32px,32px 32px}
+header{border-bottom:1px solid #c4e5af12;margin-bottom:22px}.brand{letter-spacing:2px;font-size:24px;text-shadow:3px 3px #071a1a}.brand:before{content:"";display:inline-block;width:16px;height:16px;background:#b9d891;box-shadow:5px -5px #6ca37c,-5px 5px #416d5a;margin:0 17px 0 6px;transform:rotate(-10deg)}.tag{background:#c6dfa208;border-color:#a8c98c30;color:#cbd4ac;letter-spacing:1.5px;font-size:9px}
+.adventure-banner{max-width:1360px;margin:0 auto 24px;padding:0 30px;display:flex;justify-content:space-between;align-items:center;gap:20px}.adventure-banner h1{font-family:Georgia,serif;font-weight:normal;font-size:clamp(26px,3vw,40px);margin:0 0 7px;letter-spacing:-1px;color:#f1edcf}.adventure-banner h1 em{color:#b1ce93}.adventure-banner p{margin:0;color:#95afa3;font-size:10px;letter-spacing:.5px;line-height:1.8}.edition{display:flex;gap:12px;align-items:center;color:#c9d4b2;font-size:10px;border-left:1px solid #c7dcaa33;padding-left:22px;line-height:1.8}.edition b{font-size:30px;color:#e6ce91;font-family:Georgia,serif;font-weight:normal}.edition small{color:#7f9b8d;font-size:9px}
+.screen-shell{padding:12px;background:linear-gradient(135deg,#2b4140,#1b3035);border-color:#71917b66;border-radius:12px;box-shadow:0 25px 70px #0005,inset 0 1px #d3e3ba22}.screen-top{padding:4px 3px 14px;font-size:9px;letter-spacing:1.3px}.live{text-shadow:0 0 9px #a4db9588}.viewport{box-shadow:0 0 0 2px #101f25,0 0 0 3px #5e796544;isolation:isolate}.viewport:after{content:"";position:absolute;inset:0;pointer-events:none;z-index:5;box-shadow:inset 0 0 65px #14392d18;background:repeating-linear-gradient(0deg,#092b1d05 0,#092b1d05 1px,transparent 1px,transparent 4px)}.area-label{background:#18372de8;border:1px solid #bdd09677;border-left:3px solid #efd39a;box-shadow:4px 4px #1c392d33;padding:12px 15px}.area-label strong{letter-spacing:.5px;color:#f4ecc7}.area-label small{color:#c3d7ab}.help{padding-top:16px;font-size:9px;color:#a4b7a6}.key{border-bottom:3px solid #172c30;background:#35504a;border-color:#63816855;color:#e1e8c7}.panel{background:linear-gradient(135deg,#20362fbb,#172d30ee);border-color:#72907840;border-radius:8px;box-shadow:inset 0 1px #d3e3ba0a,0 8px 20px #0001;padding:19px}.panel-title{font-size:9px;color:#a4bf9e;border-bottom:1px solid #c7dcaa18;padding-bottom:13px;letter-spacing:1.7px}.panel-title:before{content:"◆";color:#e0c487;font-size:8px;margin-right:9px}.journey{font-size:11px;color:#d0dbc2}.journey strong{font-size:21px;letter-spacing:-1px}.progress{height:6px;border:1px solid #829c6c20;background:#0d2228;box-shadow:inset 0 1px 3px #0006}.progress i{background:linear-gradient(90deg,#9ebf78,#f1d69c);box-shadow:0 0 12px #e7d28833}.badges{gap:8px}.badge{border-radius:5px;border-color:#68857466;opacity:.5;position:relative;background:linear-gradient(145deg,#29433e,#142c2d);box-shadow:inset 0 1px #fff1;padding:10px 0 9px}.badge span{text-shadow:2px 3px #071b2455;font-size:24px}.badge small{color:#c4cfb3;letter-spacing:.3px}.badge.earned{background:linear-gradient(135deg,#615d35,#293d32);box-shadow:inset 0 1px #f4ce7955,0 0 14px #f4ce7910}.badge.next{filter:none;opacity:1;border-color:#94b47b;background:#2d4439}.badge.next:after{content:"";position:absolute;top:5px;right:5px;background:#f4ce79;width:4px;height:4px;box-shadow:0 0 6px #f4ce7988}
+.monster-card{position:relative;padding:14px 0 14px 51px;min-height:75px;border-color:#7a97722b}.team-avatar{position:absolute;left:-4px;top:9px;width:48px;height:53px!important;image-rendering:pixelated}.monster-name{font-size:11px;letter-spacing:.2px}.type{border:1px solid #8caa7440;border-radius:3px;padding:3px 5px;font-size:8px;background:#132e2766}.hp{height:6px;border-radius:2px;overflow:hidden;background:#0c2427}.hp i{background:linear-gradient(90deg,#73a574,#b8d88e);box-shadow:0 0 7px #a4db9544}.stats{font-size:8px}.btn{background:linear-gradient(#365348,#29443e);border-color:#829d6b66;box-shadow:inset 0 1px #c8df9c15,0 2px 0 #0b2527;border-radius:4px}.btn:hover:not(:disabled){border-color:#bed799;filter:brightness(1.12);transform:translateY(-1px)}.btn:active:not(:disabled){transform:translateY(1px);box-shadow:none}.btn.primary{background:linear-gradient(#f6dba1,#dcb96e);border-color:#f6dba1;box-shadow:0 3px #806940;color:#253b31}.actions{gap:9px}.actions .btn{font-size:9px}.log{color:#d4ddbd;line-height:1.95;font-size:11px;min-height:75px}.tip{color:#94b29a;font-size:9px}.sound-bar{background:#142b2c;border-color:#789a7140;border-radius:6px;font-size:9px}.sound-bar .btn{font-size:9px}#music-label{font-size:9px}.bottom button{color:#a6b99e}.bottom .touch .btn{background:#233d37;border:1px solid #75906266;text-decoration:none;min-width:38px;color:#e1e6c8}
+.overlay{background:radial-gradient(ellipse at 50% 35%,#294839f7,#0e282df7);backdrop-filter:blur(3px)}.welcome{width:100%;max-width:630px}.welcome h1{font-family:Georgia,serif;font-weight:normal;font-size:clamp(25px,4vw,48px);letter-spacing:-1px;color:#f4e5bb;text-shadow:0 4px #142d2a}.welcome p{color:#c0d1b3}.welcome>.eyebrow{color:#c3d493;font-size:9px;letter-spacing:2.5px}.starter{background:linear-gradient(150deg,#345446,#203c3b);border-color:#8fae7366;border-bottom:4px solid #122f2d;padding:20px 10px 18px;border-radius:6px;box-shadow:inset 0 1px #d6e5b522}.starter:before{content:"CHOOSE PARTNER";font-size:7px;color:#8cae90;letter-spacing:1.5px;display:block;margin-bottom:5px}.starter:hover{background:linear-gradient(145deg,#49634a,#304b3c);box-shadow:0 0 25px #c3d49316}.starter strong{color:#f0e5be}.starter small{letter-spacing:1px;color:#bdd39e}.starter canvas{filter:drop-shadow(0 8px 6px #071e2044)}.toast{border:1px solid #c3d49366;box-shadow:3px 3px #142d2a55;border-radius:4px;color:#f0e6c6;background:#1b392fef;padding:12px 18px}
+.battle-field{background:linear-gradient(#9dc7ba 0%,#c9dfbd 42%,#e2e6bc 61.5%,#83a565 62%,#adc67d 100%)}.health-box{background:linear-gradient(130deg,#fff6d6,#e4e8bf);border-color:#48654d;border-radius:4px 4px 12px 4px;box-shadow:5px 5px #324d4240;padding:12px 14px}.health-box strong{letter-spacing:.5px}.health-box .level{color:#687954}.health-box small{color:#526c4e}.battle-bottom{background:linear-gradient(120deg,#f4edd0,#e3e6be);border-top-color:#4d694c;box-shadow:inset 0 3px #fff8}.battle-message{color:#2c493b}.battle-controls .move{background:linear-gradient(#f4f1d4,#d6dfb2);border-color:#9aad81;border-bottom:3px solid #87986d;box-shadow:inset 0 1px #fff8}.battle-controls .move:hover:not(:disabled){background:#f7e9b8}.battle-controls .move small{letter-spacing:.4px}
+@media(max-width:1000px){.adventure-banner{padding:0 17px}.panel{padding:14px}.monster-card{padding-left:42px}.team-avatar{width:40px!important}.monster-name{font-size:10px}.type{font-size:7px}.sound-bar{gap:8px}}@media(max-width:760px){header{margin-bottom:16px}.brand{font-size:20px}.adventure-banner{margin-bottom:18px}.adventure-banner h1{font-size:28px}.adventure-banner p{font-size:9px;max-width:270px}.edition{display:none}.screen-shell{padding:8px}.screen-top{font-size:8px;letter-spacing:.5px}.panel{padding:13px}.sidebar{margin-top:8px}.welcome h1{font-size:30px}.welcome p{font-size:10px}.starter{padding:10px 4px}.starter:before{font-size:6px;letter-spacing:.5px}.area-label{padding:8px 10px}.health-box{padding:8px 10px}.battle-bottom{padding:11px}.help{font-size:8px}.tag{display:none}.sound-bar{gap:7px}.sound-bar .btn{font-size:8px}#music-label{font-size:8px}.monster-name{font-size:9px}.type{font-size:7px}.bottom .touch{gap:5px}.bottom .touch .btn{padding:10px;min-width:34px}}
+@media(prefers-reduced-motion:reduce){.btn:hover:not(:disabled){transform:none}}
+@media(max-width:760px){.viewport{aspect-ratio:1/1;min-height:365px}.overlay{padding:16px 12px}.welcome p{line-height:1.7}.welcome h1{margin:8px 0 12px}.starter canvas{width:64px;height:64px}.welcome>.eyebrow{font-size:8px;letter-spacing:1.5px}}
+.viewport{width:100%}.journey strong{white-space:nowrap}
+.overlay .welcome{max-height:100%;overflow-y:auto;scrollbar-width:thin;scrollbar-color:#78966b transparent}#region-chart{height:clamp(120px,17vh,170px)!important}
+.guide-tools{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}.guide-tools label{display:flex;align-items:center;gap:8px;color:#c4d8b5;font-size:10px;min-width:0}.guide-tools input{width:210px;max-width:100%;min-width:0;font:inherit;background:#112b2b;border:1px solid #78966b;border-radius:3px;padding:9px;color:#eff5d5}.guide-tools .btn{padding:9px 14px;font-size:10px}.guide-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;max-height:clamp(140px,34vh,300px);overflow:auto;padding:3px;scrollbar-width:thin;scrollbar-color:#78966b #152d30}.guide-card{padding:9px 4px;background:#1e3b35;border:1px solid #6a85634d;border-radius:4px;text-align:center;min-width:0}.guide-card.owned{border-color:#e4c78b;background:#394936}.guide-card canvas{width:68px;height:68px;margin:auto}.guide-card strong{font-size:10px;color:#f4e3b7;display:block;overflow-wrap:anywhere}.guide-card>span{display:block;font-size:9px;margin:5px 0}.guide-card small{font-size:8px;color:#b3c7a8;display:block;line-height:1.6}.guide-card .btn{padding:6px;font-size:8px;margin-top:7px;width:100%}
+.shop-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;max-height:40vh;overflow:auto}.shop-card{padding:10px 7px;background:#213d36;border:1px solid #809e6b66;border-radius:5px;min-width:0}.shop-card canvas{width:56px;height:56px;margin:auto}.shop-card strong,.shop-card span,.shop-card small{display:block}.shop-card strong{color:#f1d9a7;font-size:11px;margin:7px 0}.shop-card small{font-size:9px;color:#b9cfad;line-height:1.7;min-height:62px}.shop-card span{font-size:8px;color:#e4ce94;line-height:1.7;margin:9px 0}.shop-card .btn{font-size:9px;padding:9px;width:100%}.dex-rumor{border-top:1px solid #819a6a44;margin-top:7px;padding-top:7px}.guide-tools select{font-size:9px;min-width:72px}.battle-controls select{width:100%;min-width:0;font:inherit;font-size:9px;color:#294536}
+@media(max-width:760px){.guide-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:5px;max-height:180px}.guide-card{padding:6px 2px}.guide-card canvas{width:53px;height:53px}.guide-card strong{font-size:8px}.guide-card small{font-size:7px}.guide-tools input{width:175px}.guide-tools label{font-size:8px}.guide-tools .btn{padding:9px}.sound-bar{flex-wrap:wrap}}
+@media(max-width:760px){.shop-grid{grid-template-columns:repeat(2,minmax(0,1fr));max-height:190px;gap:6px}.shop-card{padding:7px 5px}.shop-card canvas{width:36px;height:36px}.shop-card small{font-size:8px;min-height:40px}.shop-card strong{font-size:9px}.shop-card span{font-size:7px;margin:5px 0}.shop-card .btn{font-size:8px;padding:7px}.guide-tools{gap:5px}.guide-tools input{width:125px}.guide-tools select{min-width:58px;width:65px;padding:8px 2px;font-size:8px}.guide-tools .btn{font-size:8px}.battle-bottom{padding:8px}.battle-controls .btn{padding:7px 3px}.battle-message{min-height:34px;margin-bottom:7px}}
+@media(max-width:760px){.journey{gap:5px;font-size:10px}.journey strong{font-size:18px}.badges{grid-template-columns:repeat(4,minmax(0,1fr));gap:5px}.badge span{font-size:20px}.badge small{font-size:6px;letter-spacing:0}}
+.mini-map{position:absolute;right:12px;bottom:12px;z-index:2;background:#15352fee;border:1px solid #b5c68b99;border-radius:4px;padding:5px;color:#f2dfaa;box-shadow:3px 3px #17332a55}.mini-map canvas{width:154px;height:56px;image-rendering:pixelated}.mini-map span{display:block;font-size:8px;letter-spacing:1px;margin:5px 0 1px}.mini-map:hover{border-color:#ffe2a5}.mini-map.hidden{display:none}
+@media(max-width:760px){.mini-map{right:7px;bottom:7px;padding:4px}.mini-map canvas{width:110px;height:40px}.mini-map span{font-size:6px;letter-spacing:.6px}}
+.quest-list{max-height:240px;overflow:auto;text-align:left;padding:0 8px}.evolution-screen{z-index:8;background:#152b32f5}.evolution-screen canvas{width:100%;max-width:480px;height:auto}.evolution-screen p{font-size:12px;color:#f5dfab}.evolution-screen.hidden{display:none}
+#trade-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));max-height:180px;overflow:auto;margin-bottom:14px}.sound-bar{flex-wrap:wrap}
+.monster-head{gap:4px;flex-wrap:wrap}.monster-name{min-width:0;overflow-wrap:anywhere}
+.storage-team{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px;margin:8px 0}.storage-team .btn{font-size:9px;padding:6px;overflow-wrap:anywhere}.storage-team .selected{border-color:#f4ce79;background:#586348}.storage-toolbar{display:flex;align-items:center;justify-content:center;gap:8px;margin:8px 0}.storage-toolbar .btn{font-size:9px;padding:7px}.storage-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:5px;max-height:230px;overflow:auto;padding:3px}.storage-card{border:1px solid #78966b66;border-radius:4px;background:#203e35;padding:5px;min-width:0}.storage-card canvas{width:64px;max-width:100%;height:auto;margin:auto}.storage-card strong,.storage-card small{display:block;font-size:8px;overflow-wrap:anywhere}.storage-card small{color:#b8cfac;margin:4px 0}.storage-card .btn{font-size:8px;padding:6px 2px;width:100%}#storage-status{font-size:10px;margin:8px auto}#storage-deposit{font-size:9px;padding:8px}@media(max-width:760px){.storage-grid{grid-template-columns:repeat(3,minmax(0,1fr));max-height:150px}.storage-team .btn{font-size:8px;padding:5px}.storage-card canvas{width:48px}.storage-team{gap:4px}#storage-title{font-size:25px;margin:5px 0}}
+</style>
+</head>
+<body>
+<header><div><div class="eyebrow">A LITTLE WORLD. A BIG ADVENTURE.</div><div class="brand">POCKET<span>GROVE</span> <span style="font-size:13px">✦</span></div></div><div class="tag">THE EIGHT BADGE CHALLENGE</div></header>
+<div class="adventure-banner"><div><h1>A tiny world. <em>A grand adventure.</em></h1><p>Find your partner. Meet your rivals. Make a little legend.</p></div><div class="edition"><b>08</b><span>GYMS TO CONQUER<br><small>ONE UNFORGETTABLE JOURNEY</small></span></div></div>
+<main class="app">
+<section>
+<div class="screen-shell">
+<div class="screen-top"><span><span class="live">●</span> GROVE REGION</span><span id="screen-status">YOUR ADVENTURE STARTS HERE</span></div>
+<div class="viewport">
+<canvas id="world" width="960" height="600" aria-label="Adventure map. Move with arrows or WASD. Walk to gyms and press E." tabindex="0"></canvas>
+<div class="area-label"><strong id="area">Willow Commons</strong><small id="area-sub">A new adventure is taking root.</small></div>
+<div class="toast" id="toast"></div>
+<button class="mini-map hidden" id="world-map-hud" aria-label="Open world map. Gold marker shows your location. Keyboard shortcut M."><canvas id="mini-map" width="240" height="160" aria-hidden="true"></canvas><span>WORLD MAP · M</span></button>
+<div class="battle hidden" id="battle">
+<div class="battle-field"><canvas id="battle-art" class="battle-canvas" width="960" height="400"></canvas>
+<div class="health-box enemy"><strong id="enemy-name"></strong><span class="level" id="enemy-level"></span><div class="hp"><i id="enemy-hp"></i></div><small id="enemy-type"></small></div>
+<div class="health-box ally"><strong id="ally-name"></strong><span class="level" id="ally-level"></span><div class="hp"><i id="ally-hp"></i></div><small id="ally-health"></small></div></div>
+<div class="battle-bottom"><div class="battle-message" id="battle-message" role="status" aria-live="polite"></div><div class="battle-controls" id="battle-controls"></div></div>
+</div>
+<div class="overlay" id="intro"><div class="welcome">
+<div class="eyebrow">WELCOME TO THE GROVE REGION</div><h1>Small partner.<br>Legendary journey.</h1><p>Explore 24 routes and eight villages. Take on tougher gym leaders, help your neighbors, earn a fishing rod, and watch your companions evolve into powerful new forms.</p>
+<p>Your first stop is Professor Mina's blue-roofed laboratory in Willowbrook. Choose your partner there and receive 5 Normal Balls and your Grove Dex.</p><button class="btn primary" id="begin-adventure">Begin adventure</button><p id="roster-summary" style="font-size:9px;margin-top:18px;margin-bottom:0"></p>
+</div></div>
+<div class="overlay hidden" id="modal"><div class="welcome" id="modal-content"></div></div>
+<div class="overlay evolution-screen hidden" id="evolution" role="status" aria-live="polite"><div class="welcome"><canvas id="evolution-art" width="480" height="240" aria-hidden="true"></canvas><p id="evolution-text"></p></div></div>
+</div>
+<div class="help"><span><span class="key">W A S D</span> / <span class="key">↑ ↓ ← →</span> move · <span class="key">E</span> talk / interact</span><span>Walk onto doors · <span class="key">M</span> world map</span></div>
+</div>
+<div class="sound-bar"><button class="btn" id="region-map">Region map</button><button class="btn" id="field-guide">Grove Dex</button><button class="btn" id="storage-boxes">Storage boxes</button><button class="btn" id="quest-journal">Side quests</button><button class="btn" id="fish">F · Fish</button><button class="btn" id="sound-toggle" aria-pressed="false">Sound: on</button><label>Volume <input id="volume" type="range" min="0" max="100" value="45" aria-label="Sound volume"></label><button class="btn" id="music-toggle" aria-pressed="false">Music: on</button><span id="music-label" role="status">CLICK OR PRESS A KEY FOR AUDIO</span></div>
+<div class="bottom"><div class="touch" aria-label="Movement controls"><button class="btn" data-dir="left" aria-label="Move left">←</button><button class="btn" data-dir="up" aria-label="Move up">↑</button><button class="btn" data-dir="down" aria-label="Move down">↓</button><button class="btn" data-dir="right" aria-label="Move right">→</button><button class="btn" id="interact">E · Interact</button></div><button id="reset">New adventure</button></div>
+</section>
+<aside class="sidebar">
+<div class="panel"><h2 class="panel-title">YOUR BADGE CASE</h2><div class="journey"><span>Road to champion</span><strong id="badge-count">0 / 8</strong></div><div class="progress"><i id="progress" style="width:0"></i></div><div class="badges" id="badges"></div></div>
+<div class="panel"><h2 class="panel-title">YOUR COMPANIONS</h2><div id="team"><div class="tip">A lifelong friendship is one choice away.</div></div><div class="actions"><button class="btn" id="heal">♥ Heal team</button><button class="btn" id="team-switch">⇄ Lead</button></div><div class="tip" style="margin-top:12px">Free healing between battles. Your lead companion fights first.</div></div>
+<div class="panel"><h2 class="panel-title" id="quest-title">THE NEXT CHAPTER</h2><div class="log" id="quest">Visit Professor Mina to choose your first partner.</div><div class="tip" id="bag">Your adventure begins in Willowbrook.</div></div>
+</aside>
+</main>
+<script>
+'use strict';
+// All artwork is drawn locally on the pixel canvas; no image assets are needed.
+const $=id=>document.getElementById(id);
+const canvas=$('world'),ctx=canvas.getContext('2d'),bctx=$('battle-art').getContext('2d');
+ctx.imageSmoothingEnabled=false;bctx.imageSmoothingEnabled=false;
+const TYPES={Leaf:'#7fae5d',Flame:'#e68b55',Water:'#6eaec3',Stone:'#af9b7b',Spark:'#e9c95b',Frost:'#a4d5ce',Shade:'#a790be',Star:'#e5a6bd'};
+const SPECIES=[
+{name:'Spriglet',type:'Leaf',color:'#7eb465',dark:'#3e7955',shape:'leaf'},
+{name:'Cindercub',type:'Flame',color:'#e69859',dark:'#a65343',shape:'cat'},
+{name:'Puddlepup',type:'Water',color:'#7dbbc8',dark:'#427f9d',shape:'fin'},
+{name:'Pebblit',type:'Stone',color:'#b4a78c',dark:'#776a60',shape:'rock'},
+{name:'Zippit',type:'Spark',color:'#e4c85e',dark:'#aa803e',shape:'cat'},
+{name:'Snowbit',type:'Frost',color:'#b3ddd4',dark:'#72a1b2',shape:'fin'},
+{name:'Mothshade',type:'Shade',color:'#b49cc9',dark:'#6d578a',shape:'wing'},
+{name:'Stellune',type:'Star',color:'#e7afc0',dark:'#a86997',shape:'star'}
+];
+const GYMS=[
+{name:'Fern',leader:'Flora',type:'Leaf',symbol:'❧',x:6,y:4,species:[0],level:4},
+{name:'Ember',leader:'Ashby',type:'Flame',symbol:'♨',x:15,y:4,species:[1],level:6},
+{name:'Tide',leader:'Marina',type:'Water',symbol:'◈',x:24,y:4,species:[2,2],level:8},
+{name:'Boulder',leader:'Jasper',type:'Stone',symbol:'⬟',x:24,y:9,species:[3,0],level:10},
+{name:'Volt',leader:'Faraday',type:'Spark',symbol:'ϟ',x:24,y:15,species:[4,4],level:12},
+{name:'Glacier',leader:'Neve',type:'Frost',symbol:'❄',x:15,y:15,species:[5,2],level:14},
+{name:'Dusk',leader:'Vesper',type:'Shade',symbol:'☾',x:6,y:15,species:[6,6],level:16},
+{name:'Astral',leader:'Nova',type:'Star',symbol:'✦',x:6,y:9,species:[7,4,7],level:18}
+];
+const PEOPLE=[
+{name:'Pip',role:'Grove guide',shirt:'#79a9b6',hair:'#704e40',skin:'#e3bd8f',route:[[11,10],[12,10]],lines:()=>['Welcome to Willow Commons! I walk this road every day. There is always someone new to meet.',state.badges<8?`Your next stop is Gym ${state.badges+1}: ${GYMS[state.badges].name}. ${GYMS[state.badges].leader} uses ${GYMS[state.badges].type} creatures. Look for the golden marker!`:'All eight badges? You are our new champion! I knew you had it in you.']},
+{name:'Mina',role:'Creature researcher',shirt:'#eee6c6',hair:'#4c455b',skin:'#b67f60',route:[[18,10],[19,10],[20,10]],lines:()=>['I study the creatures living in our tall grass. Every companion has a type, and some matchups are stronger than others.','Water beats Flame. Flame beats Leaf. Leaf beats Water! Weaken wild creatures before throwing an orb to improve your chances.']},
+{name:'Rowan',role:'Fern fan',shirt:'#ad805f',hair:'#d5b571',skin:'#efc69c',route:[[5,6],[5,7]],lines:()=>['Flora and I grew up in this grove. Her Fern Gym is northwest of the Rest House. It is the perfect first challenge!','She loves Leaf creatures. Cindercub has an advantage, but any partner can win with a little training.']},
+{name:'Jules',role:'Traveling musician',shirt:'#ab8cb7',hair:'#413e51',skin:'#d79e75',route:[[13,16],[14,16]],lines:()=>['Hear that tune? The grove has its own rhythm. Even the wild creatures seem to bounce along.','The music changes for wild encounters and gym battles. You can adjust the volume or turn music off beneath the map.']},
+{name:'Sage',role:'Rest House keeper',shirt:'#c87a77',hair:'#d9d4bb',skin:'#a77559',route:[[17,9],[17,10]],lines:()=>['You and your partners are always welcome at the Rest House. No coins needed, just a little rest.','Use Heal team between battles to restore everyone and replenish your potions and capture orbs. Losing a battle never takes away your badges.']},
+{name:'Bea',role:'League hopeful',shirt:'#e4bd65',hair:'#6e493d',skin:'#e6b48b',route:[[23,12],[23,13]],lines:()=>[`${state.badges===8?'A real champion!':state.badges+' badges already?'} I am training for the league too. One day I will challenge all eight leaders!`,'A gym leader may have more than one creature. Keep a healthy backup and use Switch when a matchup gets tricky.']}
+];
+const LEADERS=GYMS.map((gym,i)=>({name:gym.leader,role:gym.name+' Gym Leader',gym:i,shirt:TYPES[gym.type],hair:['#4b7452','#ae573f','#416a8b','#686054','#987538','#c4e0da','#635075','#c396bc'][i],skin:['#d8a67c','#b77f5a','#e7bb94','#a77559','#e5bc8a','#d6b699','#bc8b70','#edc5a5'][i],route:[[gym.x+1,gym.y+1]]}));
+const SAVE='pocketgrove-v1';
+let state={team:[],badges:0,x:24,y:86,scene:'region',regionVersion:1,orbs:0,potions:5,wins:0},battle=null,busy=false,stepClock=0,lastTime=0,walkFrame=0,toastTimer=0;
+let storageAvailable=true;
+const held=new Set();
+const reducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)');
+let visualX=state.x*32,visualY=state.y*32,effect=null,celebrateUntil=0;
+const audio={
+ context:null,master:null,music:null,sfx:null,timer:null,muted:false,musicOff:false,volume:.45,mode:'grove',beat:0,next:0,failed:false,
+ async unlock(){
+  if(this.failed)return;
+  try{
+   if(!this.context){
+    const AudioEngine=window.AudioContext||window.webkitAudioContext;
+    if(!AudioEngine)throw new Error('Web Audio is not supported by this browser.');
+    this.context=new AudioEngine();this.master=this.context.createGain();this.music=this.context.createGain();this.sfx=this.context.createGain();
+    this.master.gain.value=this.muted?0:this.volume;this.music.gain.value=this.musicOff?0:.32;this.sfx.gain.value=.65;
+    this.music.connect(this.master);this.sfx.connect(this.master);
+    const compressor=this.context.createDynamicsCompressor();this.master.connect(compressor);compressor.connect(this.context.destination);
+    this.next=this.context.currentTime+.05;this.timer=setInterval(()=>this.schedule(),35);
+   }
+   if(this.context.state==='suspended'&&!document.hidden)await this.context.resume();
+   this.update();
+  }catch(error){this.failed=true;console.error('Pocketgrove audio unavailable:',error);$('music-label').textContent='AUDIO UNAVAILABLE';toast('Audio could not start. Gameplay still works; try reopening in a modern browser.')}
+ },
+ tone(note,time,length=.15,wave='square',volume=.1,channel=this.sfx,slide=null){
+  if(!this.context||this.context.state!=='running')return;
+  const osc=this.context.createOscillator(),gain=this.context.createGain(),hz=440*Math.pow(2,(note-69)/12);
+  osc.type=wave;osc.frequency.setValueAtTime(hz,time);
+  if(slide!==null)osc.frequency.exponentialRampToValueAtTime(440*Math.pow(2,(slide-69)/12),time+length);
+  gain.gain.setValueAtTime(0,time);gain.gain.linearRampToValueAtTime(volume,time+.008);gain.gain.exponentialRampToValueAtTime(.0001,time+length);
+  osc.connect(gain);gain.connect(channel);osc.start(time);osc.stop(time+length+.02);
+  osc.onended=()=>{osc.disconnect();gain.disconnect()};
+ },
+ setMode(mode){if(this.mode===mode)return;this.mode=mode;this.beat=0;if(this.context)this.next=this.context.currentTime+.08;this.update()},
+ update(){
+  $('sound-toggle').textContent=this.muted?'Sound: off':'Sound: on';$('sound-toggle').setAttribute('aria-pressed',String(this.muted));
+  $('music-toggle').textContent=this.musicOff?'Music: off':'Music: on';$('music-toggle').setAttribute('aria-pressed',String(this.musicOff));
+  if(this.failed)return;
+  $('music-label').textContent=!this.context?'CLICK OR PRESS A KEY FOR AUDIO':this.muted||this.volume===0?'AUDIO MUTED':this.musicOff?'SOUND EFFECTS ONLY':({grove:'♪ WILLOW WANDER',battle:'♪ WILD HEARTS',gym:'♪ BADGE BREAKER',victory:'♪ LITTLE LEGEND'}[this.mode]);
+  if(this.context){this.master.gain.setTargetAtTime(this.muted?0:this.volume,this.context.currentTime,.03);this.music.gain.setTargetAtTime(this.musicOff?0:.32,this.context.currentTime,.03)}
+ },
+ schedule(){
+  if(!this.context||this.context.state!=='running'||document.hidden)return;
+  const c=this.context;if(this.next<c.currentTime)this.next=c.currentTime+.03;
+  const fighting=this.mode==='battle'||this.mode==='gym',tempo=fighting?.125:.19;
+  const melodies={grove:[72,0,76,79,81,79,76,74,72,0,67,72,74,76,79,0,69,0,72,76,79,76,72,69,67,71,74,79,76,74,72,0],battle:[69,72,76,72,69,76,79,76,67,71,74,71,67,74,77,74,65,69,72,76,65,72,76,79,64,68,71,74,76,74,71,68],gym:[69,81,76,72,69,76,72,83,71,79,74,71,67,74,79,83,72,84,79,76,72,79,76,84,68,80,76,71,68,76,80,83],victory:[72,76,79,84,0,79,84,88,86,84,79,76,77,81,84,89,88,84,79,76,74,77,81,86,84,79,76,72,79,76,72,0]};
+  while(this.next<c.currentTime+.16){
+   const n=this.beat%32,t=this.next,root=(fighting?[45,43,41,40]:[48,45,53,43])[Math.floor(n/8)],melody=melodies[this.mode][n];
+   if(melody)this.tone(melody,t,tempo*1.6,'square',.085,this.music);
+   if(n%2===0)this.tone(root+(n%4===2?12:0),t,tempo*1.6,'triangle',.23,this.music);
+   this.tone(root+12+[0,7,12,7][n%4],t,tempo*.7,'triangle',.075,this.music);
+   if(fighting){if(n%4===0)this.tone(43,t,.12,'sine',.3,this.music,23);if(n%4===2)this.tone(91,t,.045,'triangle',.1,this.music,43)}
+   this.next+=tempo;this.beat++;
+  }
+ },
+ play(name,type='Star'){
+  if(!this.context||this.muted||document.hidden)return;
+  const t=this.context.currentTime+.01,base={Leaf:76,Flame:55,Water:67,Stone:40,Spark:88,Frost:83,Shade:52,Star:79}[type];
+  const sequences={step:[43,38],grass:[81,75],click:[79],encounter:[57,64,69,76],attack:[base,base+7,base+12],hit:[45,33],heal:[72,76,79,84,88],catch:[84,79,72,67],wobble:[60,64,60],caught:[72,76,79,84,91],faint:[64,60,55,48],switch:[67,74,79],victory:[72,72,76,79,84,79,84,88],run:[76,72,67]};
+  const notes=sequences[name]||sequences.click,spacing=name==='step'||name==='grass'?.025:name==='victory'?.13:.075;
+  notes.forEach((n,i)=>this.tone(n,t+i*spacing,name==='step'?.045:.18,name==='hit'||type==='Flame'?'sawtooth':name==='heal'||type==='Water'?'sine':'square',name==='step'||name==='grass'?.035:.12,this.sfx,name==='attack'?n-7:null));
+ }
+};
+function audioPreferences(){try{localStorage.setItem('pocketgrove-audio',JSON.stringify({muted:audio.muted,musicOff:audio.musicOff,volume:audio.volume}))}catch(error){console.warn('Pocketgrove audio settings could not be saved:',error);toast('Sound settings apply to this tab but could not be saved.')}}
+function initAudio(){
+ try{const raw=localStorage.getItem('pocketgrove-audio');if(raw){const prefs=JSON.parse(raw);if(typeof prefs.muted!=='boolean'||typeof prefs.musicOff!=='boolean'||!Number.isFinite(prefs.volume)||prefs.volume<0||prefs.volume>1)throw new Error('Invalid audio settings');Object.assign(audio,{muted:prefs.muted,musicOff:prefs.musicOff,volume:prefs.volume})}}catch(error){console.warn('Pocketgrove audio settings could not be loaded:',error);toast('Sound settings could not be loaded; using default volume.')}
+ $('volume').value=audio.volume*100;audio.update();
+ document.addEventListener('pointerdown',()=>audio.unlock(),{capture:true});document.addEventListener('keydown',()=>audio.unlock(),{capture:true});
+ $('sound-toggle').onclick=()=>{audio.muted=!audio.muted;audio.update();audioPreferences()};
+ $('music-toggle').onclick=()=>{audio.musicOff=!audio.musicOff;audio.update();audioPreferences()};
+ $('volume').oninput=event=>{audio.volume=Number(event.target.value)/100;audio.update();audioPreferences()};
+ document.addEventListener('visibilitychange',async()=>{if(!audio.context)return;try{if(document.hidden)await audio.context.suspend();else{audio.next=audio.context.currentTime+.05;await audio.unlock()}}catch(error){console.error('Pocketgrove audio pause failed:',error);toast('Audio was interrupted. Click the game to resume.')}});
+ document.addEventListener('click',event=>{if(event.target.closest('button')&&!event.target.closest('#battle-controls'))audio.play('click')});
+}
+async function animateEffect(kind,target='enemy',type='Star',text='',duration=650){
+ effect={kind,target,type,text,start:performance.now(),duration};audio.play(kind==='attack'||kind==='tackle'?'attack':kind,type);
+ await wait(reducedMotion.matches?Math.min(180,duration):duration);effect=null;
+}
+function sparkle(c,x,y,r,color){rect(c,x-r,y-2,r*2+3,4,color);rect(c,x-2,y-r,4,r*2+3,color)}
+function personPosition(person,time=performance.now()){
+ const step=time/2600,index=Math.floor(step)%person.route.length,previous=(index+person.route.length-1)%person.route.length,p=reducedMotion.matches?1:Math.min(1,(step%1)*3),smooth=p*p*(3-2*p);
+ return {x:person.route[previous][0]+(person.route[index][0]-person.route[previous][0])*smooth,y:person.route[previous][1]+(person.route[index][1]-person.route[previous][1])*smooth,walking:p<1};
+}
+function drawPerson(c,person,x,y,time=performance.now(),walking=false){
+ const bob=reducedMotion.matches?0:Math.sin(time/(walking?90:440)+person.name.length)*(walking?2:1),stride=walking&&!reducedMotion.matches?Math.sin(time/95)*3:0;
+ rect(c,x-10,y+11,22,5,'#42633e45');rect(c,x-7,y+5+stride,6,9,'#3e5363');rect(c,x+3,y+5-stride,6,9,'#3e5363');
+ rect(c,x-8,y-8+bob,18,16,person.shirt);rect(c,x-12,y-5+bob,5,11,person.skin);rect(c,x+10,y-5+bob,5,11,person.skin);rect(c,x-7,y-21+bob,16,15,person.skin);
+ rect(c,x-9,y-24+bob,20,7,person.hair);rect(c,x-9,y-18+bob,4,7,person.hair);rect(c,x-3,y-14+bob,2,3,'#263f3e');rect(c,x+5,y-14+bob,2,3,'#263f3e');rect(c,x,y-9+bob,4,1,'#905e54');
+}
+function talk(person){
+ if(person.gym!==undefined){talkLeader(person);return}
+ held.clear();audio.play('click');let page=0;const lines=person.lines();
+ const show=()=>{$('modal-content').innerHTML='<div class="eyebrow" id="person-role"></div><canvas id="person-portrait" width="120" height="100" style="width:120px;height:100px;margin:auto" aria-hidden="true"></canvas><h1 id="person-name"></h1><p id="person-line" role="status" aria-live="polite"></p><button class="btn primary" id="dialogue-next"></button>';
+ $('person-role').textContent=person.role;$('person-name').textContent=person.name;$('person-line').textContent=lines[page];const c=$('person-portrait').getContext('2d');c.imageSmoothingEnabled=false;c.scale(3,3);drawPerson(c,person,20,26,0);$('dialogue-next').textContent=page<lines.length-1?'Keep talking →':'See you around!';
+ $('dialogue-next').onclick=()=>{if(++page<lines.length)show();else{$('modal').classList.add('hidden');canvas.focus()}};$('dialogue-next').focus()};
+ $('modal').classList.remove('hidden');show();
+}
+function talkLeader(person){
+ held.clear();audio.play('click');const i=person.gym,g=GYMS[i],cleared=i<state.badges,locked=i>state.badges;
+ const greetings=[
+  'Every mighty forest begins with one little sprout. Show me how you and your partner have grown!',
+  'A brave heart burns brighter than any flame. Let us see that spark of yours!',
+  'A good team moves like the tide: together, and never giving up. Ready to make waves?',
+  'Trust is the foundation of a strong team. Let us put yours to the test!',
+  'I can feel the energy in your team! Ready for an electrifying challenge?',
+  'Stay calm, even when the battle turns icy. A clear head can win the day.',
+  'Do not fear the shadows. Your companions will always be your light.',
+  'You have come so far. One final badge stands between you and the stars. Show me your legend!'
+ ];
+ $('modal-content').innerHTML='<div class="eyebrow" id="leader-role"></div><canvas id="leader-portrait" width="120" height="100" style="width:120px;height:100px;margin:auto" aria-hidden="true"></canvas><h1 id="leader-name"></h1><p id="leader-line" role="status"></p><p id="leader-details" style="font-size:10px"></p><div class="actions"><button class="btn" id="leader-leave">See you later</button><button class="btn primary" id="leader-challenge">Challenge leader</button></div>';
+ $('leader-role').textContent=g.name.toUpperCase()+' GYM · '+g.type.toUpperCase()+' SPECIALIST';$('leader-name').textContent=person.name;
+ $('leader-line').textContent=cleared?'You earned my badge fair and square! I am proud of you and your companions. Keep making the Grove proud.':locked?`I would love to battle, but the league challenges must be completed in order. Earn the ${GYMS[state.badges].name} badge first, then come find me.`:greetings[i];
+ $('leader-details').textContent=cleared?g.name+' badge earned':`GYM ${i+1} / 8 · LEVEL ${g.level}–${Math.min(50,g.level+g.species.length-1)} · ${g.species.length} COMPANIONS · 2 LEADER POTIONS · EVOLVED TEAMS`;
+ const c=$('leader-portrait').getContext('2d');c.imageSmoothingEnabled=false;c.scale(3,3);drawPerson(c,person,20,26,0);
+ $('leader-challenge').disabled=cleared||locked;$('leader-challenge').textContent=cleared?'Badge earned':locked?'Gym locked':'Challenge '+person.name;
+ $('leader-leave').onclick=()=>{$('modal').classList.add('hidden');canvas.focus()};
+ $('leader-challenge').onclick=()=>{$('modal').classList.add('hidden');challengeGym(i)};
+ $('modal').classList.remove('hidden');(cleared||locked?$('leader-leave'):$('leader-challenge')).focus();
+}
+function drawCelebration(c,time){
+ if(time>=celebrateUntil||reducedMotion.matches)return;
+ for(let i=0;i<65;i++){const age=(time/1000+i*.173)%3,x=(i*149+Math.sin(age*2+i)*28)%960,y=age*230-45;c.save();c.translate(x,y);c.rotate(age*3+i);rect(c,0,0,5,10,['#f4ce79','#e7afc0','#9bd289','#b3ddd4'][i%4]);c.restore()}
+}
+function maxHP(mon){return 38+mon.level*7+(mon.species===3?8:0)+(SPECIES[mon.species]?.hpBonus||0)}
+function makeMon(species,level){const mon={species,level,hp:0};mon.hp=maxHP(mon);return mon}
+function validMon(m){return m&&Number.isInteger(m.species)&&m.species>=0&&m.species<SPECIES.length&&Number.isInteger(m.level)&&m.level>0&&m.level<=50&&Number.isFinite(m.hp)&&m.hp>=0&&m.hp<=maxHP(m)}
+function save(){if(!state.adventureStarted&&!state.team.length)return;try{localStorage.setItem(SAVE,JSON.stringify(state))}catch(error){storageAvailable=false;$('screen-status').textContent='SAVE UNAVAILABLE · KEEP THIS TAB OPEN'}}
+function load(){try{const raw=localStorage.getItem(SAVE);if(!raw)return;const s=JSON.parse(raw);if(!s||!Array.isArray(s.team)||s.team.length>6||!s.team.every(validMon)||(s.reserve!==undefined&&(!Array.isArray(s.reserve)||!s.reserve.every(validMon)))||!Number.isInteger(s.badges)||s.badges<0||s.badges>8||![s.x,s.y,s.orbs,s.potions,s.wins].every(Number.isInteger)||s.x<0||s.x>=REGION_WIDTH||s.y<0||s.y>=REGION_HEIGHT||s.orbs<0||s.potions<0||s.wins<0||!validRegionSave(s))throw new Error('Invalid adventure data');state=s;if(!state.regionVersion){state.scene='region';state.x=24;state.y=86;state.regionVersion=1;save();toast('Welcome to the expanded Grove! Your companions and badges have been kept.')} $('intro').classList.add('hidden')}catch(error){$('screen-status').textContent='SAVE COULD NOT BE LOADED';toast('Your saved adventure could not be loaded. Use New adventure to start again.');console.error('Pocketgrove save load failed:',error)}}
+function toast(text){$('toast').textContent=text;clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').textContent='',4200)}
+function rect(c,x,y,w,h,color){c.fillStyle=color;c.fillRect(Math.round(x),Math.round(y),w,h)}
+function creature(c,id,x,y,scale=4,back=false){
+scale*=SPECIES[id].size||1;
+if(id>=8){drawNewCreature(c,id,x,y,scale,back);return}
+const s=SPECIES[id];c.save();c.translate(Math.round(x),Math.round(y));c.scale(scale,scale);
+rect(c,-10,8,22,3,'#263e3530');
+if(s.shape==='wing'){rect(c,-17,-9,12,16,s.dark);rect(c,6,-9,12,16,s.dark);rect(c,-19,-6,8,8,s.color);rect(c,13,-6,8,8,s.color)}
+if(s.shape==='leaf'){rect(c,-3,-21,5,10,s.dark);rect(c,1,-22,8,5,'#b4d876');rect(c,-9,-18,8,5,s.color)}
+if(s.shape==='cat'){rect(c,-10,-18,6,9,s.dark);rect(c,5,-18,6,9,s.dark);rect(c,-8,-17,3,5,s.color);rect(c,7,-17,3,5,s.color);rect(c,10,-2,8,4,s.dark);rect(c,16,-7,4,8,s.color)}
+if(s.shape==='fin'){rect(c,-15,-7,9,8,s.dark);rect(c,8,-7,9,8,s.dark);rect(c,-2,-20,5,11,s.dark)}
+if(s.shape==='star'){rect(c,-3,-22,7,12,s.dark);rect(c,-17,-9,11,6,s.dark);rect(c,9,-9,10,6,s.dark)}
+rect(c,-10,-10,21,16,s.dark);rect(c,-7,-14,15,23,s.color);rect(c,-11,-7,23,12,s.color);rect(c,-7,6,6,5,s.dark);rect(c,3,6,6,5,s.dark);rect(c,-5,0,12,6,id===6?'#cbb8d9':'#ecdfb0');
+if(s.shape==='rock'){rect(c,-7,-17,12,5,s.dark);rect(c,-12,-10,5,9,s.dark)}
+if(!back){rect(c,-5,-7,3,4,'#233c3f');rect(c,5,-7,3,4,'#233c3f');rect(c,-5,-7,1,1,'#fff3d1');rect(c,5,-7,1,1,'#fff3d1');rect(c,0,-1,3,2,s.dark)}else{rect(c,-5,-7,12,5,s.dark)}
+rect(c,-7,-12,5,2,'#ffffff35');c.restore();
+}
+function tree(x,y,variant=0){
+const sway=reducedMotion.matches?0:Math.round(Math.sin(performance.now()/1200+x*.03+y*.02));
+rect(ctx,x+6,y+30,31,10,'#294e3d22');rect(ctx,x+14,y+23,8,17,'#70513c');rect(ctx,x+16,y+25,2,12,'#a18355');
+rect(ctx,x+2+sway,y+9,31,20,'#2e634c');rect(ctx,x+5+sway,y+2,25,29,'#3b7854');rect(ctx,x+10+sway,y-4,15,35,variant?'#5b915b':'#4f895b');rect(ctx,x+5+sway,y+7,21,12,variant?'#76a366':'#6b9b61');rect(ctx,x+10+sway,y+1,12,8,'#85ad6c');rect(ctx,x+13+sway,y,7,3,'#a8c781');rect(ctx,x+4+sway,y+24,27,7,'#356b50');rect(ctx,x+7+sway,y+28,21,5,'#2c5c47');rect(ctx,x+8+sway,y+13,5,3,'#a0bc7633');rect(ctx,x+23+sway,y+16,4,5,'#254f4533');
+}
+function building(g,i){
+const x=g.x*32,y=g.y*32,color=TYPES[g.type];
+rect(ctx,x-40,y+12,94,15,'#294e3d33');rect(ctx,x-38,y-35,76,54,'#e5d7aa');rect(ctx,x-38,y-7,76,26,'#c7c295');rect(ctx,x-38,y+15,76,5,'#83916b');
+for(let row=0;row<3;row++){rect(ctx,x-37,y-19+row*12,74,1,'#a79e7722');for(let col=0;col<5;col++)rect(ctx,x-31+col*15+(row%2)*5,y-18+row*12,1,10,'#a79e771c')}
+rect(ctx,x-44,y-44,88,19,'#304e4a');rect(ctx,x-39,y-50,78,19,color);rect(ctx,x-32,y-55,64,7,color);rect(ctx,x-32,y-55,64,2,'#fff1c044');rect(ctx,x-39,y-39,78,3,'#193e3933');
+for(let j=0;j<7;j++){rect(ctx,x-36+j*11,y-48,1,9,'#163d3d22');rect(ctx,x-34+j*11,y-47,7,2,'#fff2bf22')}
+rect(ctx,x-10,y-9,20,28,'#58745b');rect(ctx,x-7,y-6,14,25,'#244748');rect(ctx,x-4,y-3,8,11,'#7eada0');rect(ctx,x+3,y+9,2,2,'#f5d485');rect(ctx,x-12,y+19,24,4,'#dbd3aa');
+for(const offset of [-26,23]){rect(ctx,x+offset-8,y-18,16,16,'#54776c');rect(ctx,x+offset-6,y-16,12,12,'#86bcb2');rect(ctx,x+offset-6,y-16,12,3,'#bfe0c7');rect(ctx,x+offset-1,y-16,2,12,'#ede4bd');rect(ctx,x+offset-6,y-10,12,2,'#ede4bd');rect(ctx,x+offset-9,y-1,18,3,'#8e9270');rect(ctx,x+offset-8,y+2,16,4,'#5f925d');for(let k=0;k<3;k++)rect(ctx,x+offset-6+k*5,y+1,3,3,['#e9c781','#d58c8b','#f0dfac'][k])}
+rect(ctx,x-29,y-34,58,12,'#304c43');rect(ctx,x-27,y-33,54,1,'#9fba8055');ctx.font='bold 10px monospace';ctx.textAlign='center';ctx.fillStyle='#f4e8be';ctx.fillText((i+1)+' '+g.name.toUpperCase(),x,y-25);
+rect(ctx,x+37,y-26,2,43,'#665d45');rect(ctx,x+39,y-25,16,21,color);rect(ctx,x+41,y-22,12,1,'#fff3bf66');ctx.font='bold 10px monospace';ctx.fillStyle='#1d3e3b';ctx.fillText(state.badges>i?'✓':String(i+1),x+47,y-10);
+if(state.badges===i){const bob=reducedMotion.matches?0:Math.sin(performance.now()/250)*3;sparkle(ctx,x,y-68+bob,5,'#f6d784')}
+}
+function pondTile(x,y){return x>=17&&x<=19&&y>=7&&y<=8}
+function isGrass(x,y){return !pondTile(x,y)&&((x>=9&&x<=12&&y>=6&&y<=8)||(x>=18&&x<=21&&y>=11&&y<=13)||(x>=9&&x<=12&&y>=12&&y<=14)||(x>=19&&x<=21&&y>=5&&y<=7))}
+function blocked(x,y){if(state.scene!=='commons')return regionBlocked(x,y);if(x<1||x>28||y<2||y>17||pondTile(x,y))return true;return GYMS.some(g=>Math.abs(x-g.x)<=1&&y>=g.y-1&&y<=g.y)||((x===14||x===15||x===16)&&(y===8||y===9))}
+function drawScenery(time){
+rect(ctx,530,213,113,73,'#4c7c5d');rect(ctx,536,207,100,84,'#4c7c5d');rect(ctx,534,216,105,66,'#c4cb96');rect(ctx,541,211,90,76,'#c4cb96');rect(ctx,539,220,95,58,'#528c8b');rect(ctx,546,216,80,66,'#528c8b');rect(ctx,545,225,82,49,'#70ada1');rect(ctx,553,220,63,59,'#70ada1');
+const phase=reducedMotion.matches?0:time/950;
+for(let i=0;i<8;i++){const x=548+(i*19)%74+Math.sin(phase+i)*3,y=228+(i*13)%46;rect(ctx,x,y,10+i%3*3,2,i%2?'#b2d4b3':'#91c5af');rect(ctx,x+4,y+3,6,1,'#406f7922')}
+for(const [x,y] of [[551,237],[615,267]]){rect(ctx,x-7,y-3,15,7,'#417c61');rect(ctx,x-4,y-6,10,12,'#5c9764');rect(ctx,x,y-6,2,4,'#b2c87d');rect(ctx,x+2,y-9,4,4,'#f0bfba');rect(ctx,x+1,y-8,6,2,'#f7ded0')}
+for(const [x,y] of [[532,227],[638,263],[563,290]]){rect(ctx,x,y,8,5,'#8f9d7c');rect(ctx,x+1,y-2,5,3,'#d0d2a6')}
+for(const [x,y] of [[271,223],[410,288],[664,440],[279,465],[691,199],[407,465],[840,330]]){
+rect(ctx,x-9,y+6,23,5,'#456d4b22');rect(ctx,x,y,2,11,'#4e8054');rect(ctx,x-5,y+4,7,3,'#629358');rect(ctx,x+2,y+2,6,3,'#9eb96f');rect(ctx,x-3,y-4,8,8,'#ecd197');rect(ctx,x-5,y-2,12,4,'#eadcb0');rect(ctx,x,y-1,3,3,'#b28158');
+rect(ctx,x+9,y+4,2,7,'#4e8054');rect(ctx,x+6,y,8,5,'#d69e9a');rect(ctx,x+9,y+1,2,2,'#f5dab1');
+}
+for(const [x,y] of [[258,190],[702,190],[258,510],[702,510]]){rect(ctx,x+2,y,3,24,'#626c50');rect(ctx,x-2,y-10,11,14,'#3d6050');rect(ctx,x,y-8,7,9,'#e9d69b');rect(ctx,x+2,y-6,3,6,'#fff0bd');rect(ctx,x-3,y-12,13,3,'#3d6050');rect(ctx,x-1,y+24,10,3,'#6e8158')}
+if(!reducedMotion.matches)for(let i=0;i<4;i++){const x=275+i*131+Math.sin(time/1900+i*3)*22,y=260+(i*67)%200+Math.cos(time/1500+i)*14,wing=Math.sin(time/70+i)>0?4:2;rect(ctx,x-wing,y,wing,3,i%2?'#eec59b':'#d9bbd1');rect(ctx,x+1,y,wing,3,i%2?'#f8e2af':'#eee1d6');rect(ctx,x,y,1,4,'#536752')}
+}
+function drawWorld(time){
+if(state.scene!=='commons'){drawRegion(time);return}
+ctx.fillStyle='#91b975';ctx.fillRect(0,0,960,600);
+for(let y=1;y<19;y++)for(let x=0;x<30;x++){if((x*7+y*13)%11===0)rect(ctx,x*32+7,y*32+10,3,3,'#a6c784');if((x*11+y*3)%23===0){rect(ctx,x*32+12,y*32+5,3,3,'#dfd99b');rect(ctx,x*32+15,y*32+8,3,3,'#e8bdb0')}}
+// A continuous ring road connects all eight gym entrances.
+rect(ctx,160,160,672,32,'#d7ca98');rect(ctx,160,192,64,352,'#d7ca98');rect(ctx,736,192,64,352,'#d7ca98');rect(ctx,192,512,576,32,'#d7ca98');rect(ctx,464,160,32,384,'#d7ca98');rect(ctx,192,320,576,32,'#d7ca98');
+rect(ctx,224,192,2,128,'#6e985b66');rect(ctx,224,352,2,160,'#6e985b66');rect(ctx,734,192,2,128,'#6e985b66');rect(ctx,734,352,2,160,'#6e985b66');rect(ctx,226,318,236,2,'#6e985b66');rect(ctx,498,318,236,2,'#6e985b66');rect(ctx,226,352,236,2,'#f2e6b555');rect(ctx,498,352,236,2,'#f2e6b555');
+for(let i=0;i<110;i++){const x=160+(i*83)%672,y=160+(i*53)%384;if((y<192)||(x<224)||(x>736)||(y>512)||(x>=464&&x<496)||(y>=320&&y<352))rect(ctx,x,y,2+i%3,1,i%2?'#a79f7133':'#f4e9b655')}
+for(let x=168;x<800;x+=29){rect(ctx,x,171,5,2,'#bbba88');rect(ctx,x+9,530,4,2,'#bbba88')}
+for(let y=0;y<19;y++)for(let x=0;x<30;x++)if(isGrass(x,y)){rect(ctx,x*32,y*32,32,32,'#78a769');const sway=reducedMotion.matches?0:Math.round(Math.sin(time/550+x*.7+y)*1.5);for(let k=0;k<4;k++){const gx=x*32+4+k*7,gy=y*32+12+(k%2)*11;rect(ctx,gx,gy,2,6,'#427d51');rect(ctx,gx-2+sway,gy-3,2,4,'#58915b');rect(ctx,gx+2+sway,gy-2,2,5,'#b0cc7a')}}
+drawScenery(time);
+for(let x=0;x<30;x++){tree(x*32,-9,x%2);tree(x*32,558,x%2)}
+for(let y=1;y<18;y++){tree(-8,y*32);tree(936,y*32)}
+[[2,3],[3,7],[2,12],[3,16],[10,3],[11,3],[19,3],[27,6],[27,12],[26,16],[16,13],[17,13],[8,10],[9,10],[20,16]].forEach(([x,y])=>tree(x*32,y*32));
+GYMS.forEach((g,i)=>{if(i===0)building(g,i);else{const x=g.x*32,y=g.y*32;rect(ctx,x-35,y-32,70,49,'#c9c49a');rect(ctx,x-40,y-44,80,17,'#79927b');ctx.font='9px monospace';ctx.fillStyle='#294b42';ctx.textAlign='center';ctx.fillText('GYM MOVED',x,y-11);ctx.fillText('ROUTE '+(i+3),x,y+2)}});
+rect(ctx,446,547,68,15,'#345648');ctx.textAlign='center';ctx.font='9px monospace';ctx.fillStyle='#f0dfb3';ctx.fillText('E · FERNWICK',480,558);
+const hx=480,hy=280;rect(ctx,hx-37,hy-31,74,52,'#eee1b8');rect(ctx,hx-42,hy-43,84,19,'#b86b63');rect(ctx,hx-32,hy-50,64,10,'#d38a75');rect(ctx,hx-7,hy-17,14,14,'#fff2d1');rect(ctx,hx-3,hy-21,6,22,'#bc665d');rect(ctx,hx-11,hy-13,22,6,'#bc665d');rect(ctx,hx-8,hy+4,16,17,'#536c5c');
+ctx.textAlign='center';ctx.font='10px monospace';ctx.fillStyle='#3f604d';ctx.fillText('REST HOUSE',480,313);
+for(const person of [...PEOPLE,...LEADERS.filter(p=>p.gym===0)]){const pos=personPosition(person,time);drawPerson(ctx,person,pos.x*32,pos.y*32,time,pos.walking);if(person.gym!==undefined){ctx.font='bold 9px monospace';ctx.textAlign='center';ctx.fillStyle='#173a36';ctx.fillText(person.name.toUpperCase(),pos.x*32,pos.y*32+27);if(person.gym===state.badges)sparkle(ctx,pos.x*32,pos.y*32-36,4,'#fff0af')}if(state.team.length&&Math.hypot(pos.x-state.x,pos.y-state.y)<=1.8){rect(ctx,pos.x*32-8,pos.y*32-55,19,15,'#16363aed');ctx.fillStyle='#f4ce79';ctx.font='bold 10px monospace';ctx.textAlign='center';ctx.fillText('E',pos.x*32+2,pos.y*32-44)}}
+const px=visualX,py=visualY,bob=reducedMotion.matches?0:Math.sin(time/(held.size?80:450))* (held.size?2.5:1);
+rect(ctx,px-9,py+12,21,5,'#42633e55');rect(ctx,px-7,py+6,6,9,'#314e58');rect(ctx,px+3,py+6,6,9,'#314e58');rect(ctx,px-8,py-6,18,15,'#deac62');rect(ctx,px-12,py-3,5,10,'#e7c99b');rect(ctx,px+10,py-3,5,10,'#e7c99b');rect(ctx,px-7,py-18+bob,16,14,'#ebcda0');rect(ctx,px-9,py-22+bob,20,8,'#b95f54');rect(ctx,px-5,py-26+bob,13,5,'#da7f64');rect(ctx,px+4,py-13+bob,2,3,'#263f3e');rect(ctx,px-9,py-5,7,13,'#6d8180');
+if(state.team.length)creature(ctx,state.team[0].species,px-24,py+11+bob*2,0.8);
+if(!reducedMotion.matches)for(let i=0;i<18;i++){const x=(time*.013+i*113)%940+10,y=65+(i*71)%460+Math.sin(time/1200+i)*17;ctx.globalAlpha=.35+Math.sin(time/900+i)*.2;rect(ctx,x,y,4,2,i%3===0?'#ffe9a8':'#d4e8a7');rect(ctx,x+2,y-2,2,2,'#b6d68c')}ctx.globalAlpha=1;
+if(effect&&effect.kind==='heal'&&!battle){const p=Math.min(1,(time-effect.start)/effect.duration);for(let i=0;i<10;i++)sparkle(ctx,px+Math.sin(i*2.4)*35,py-p*55+i%3*10,3,'#efffc5')}
+drawCelebration(ctx,time);
+}
+function renderUI(){
+$('badge-count').textContent=state.badges+' / 8';$('progress').style.width=state.badges/8*100+'%';
+$('badges').innerHTML=GYMS.map((g,i)=>`<div class="badge ${i<state.badges?'earned':i===state.badges?'next':''}" title="${g.name} badge${i<state.badges?' earned':i===state.badges?' · next challenge':''}"><span style="color:${TYPES[g.type]}">${g.symbol}</span><small>${g.name}</small></div>`).join('');
+$('team').innerHTML=state.team.map((m,i)=>`<div class="monster-card"><canvas class="team-avatar" width="64" height="64" aria-hidden="true" data-species="${m.species}"></canvas><div class="monster-head"><span class="monster-name">${i===0?'▸ ':''}${SPECIES[m.species].name}</span><span class="type" style="color:${TYPES[SPECIES[m.species].type]}">${SPECIES[m.species].type}</span></div><div class="hp"><i style="width:${m.hp/maxHP(m)*100}%"></i></div><div class="stats"><span>LV. ${m.level}</span><span>${m.hp} / ${maxHP(m)} HP</span></div></div>`).join('')||'<div class="tip">A lifelong friendship is one choice away.</div>';
+$('team').querySelectorAll('canvas').forEach(avatar=>{const c=avatar.getContext('2d'),id=Number(avatar.dataset.species),s=SPECIES[id],stage=s.stage;c.imageSmoothingEnabled=false;creature(c,id,31,s.legendary?43:stage?48:44,s.legendary?.72:stage===2?1.05:stage?1.3:1.55)});
+$('bag').textContent=`${state.coins??600} coins · ${state.orbs} normal · ${state.greatBalls||0} great · ${state.masterBalls||0} master balls · ${state.potions} potions${state.hasDex?' · Grove Dex':''}${state.fishingRod?' · Fishing rod · '+(state.fishCaught||0)+' fish caught':''}`;
+if(state.team.length){if(state.badges<8){const g=GYMS[state.badges];$('quest').textContent=`Gym ${state.badges+1}: ${g.name}. Find ${g.leader}'s ${g.type}-type gym. Walk to the door and press E.`}else $('quest').textContent='Eight badges. One champion. The Grove is yours! Keep exploring and collecting companions.'}
+if(storageAvailable)$('screen-status').textContent=state.adventureStarted?(state.badges===8?'GROVE LEAGUE CHAMPION':'ADVENTURE AUTO-SAVED'):'YOUR ADVENTURE STARTS HERE';
+updateRegionUI();
+}
+function start(){if(state.adventureStarted||state.team.length)return;state.adventureStarted=true;initializeAdventure();$('intro').classList.add('hidden');renderUI();save();audio.play('click');toast('Visit Professor Mina! Her blue-roofed lab is northeast of you. Walk onto its doorway.');canvas.focus({preventScroll:true})}
+function heal(){if(evolving||!state.team.length||battle||!$('modal').classList.contains('hidden'))return;state.team.forEach(m=>m.hp=maxHP(m));state.potions=Math.max(state.potions,5);state.orbs=Math.max(state.orbs,6);effect={kind:'heal',target:'ally',start:performance.now(),duration:1100};audio.play('heal');renderUI();save();toast('Team restored! Your rest supplies have been replenished.')}
+function interact(){
+if(evolving||!state.adventureStarted||battle||!$('intro').classList.contains('hidden')||!$('modal').classList.contains('hidden'))return;
+if(state.scene!=='commons'){interactRegion();return}
+if(state.x>=14&&state.x<=16&&state.y===17){changeScene('region',26,19);toast('Back in Fernwick. The forest and southern routes await.');return}
+const nearby=[...PEOPLE,...LEADERS.filter(p=>p.gym===0)].map(person=>({person,pos:personPosition(person)})).filter(({pos})=>Math.hypot(pos.x-state.x,pos.y-state.y)<=1.8).sort((a,b)=>Math.hypot(a.pos.x-state.x,a.pos.y-state.y)-Math.hypot(b.pos.x-state.x,b.pos.y-state.y));
+if(nearby.length){talk(nearby[0].person);return}
+if(Math.abs(state.x-15)<=2&&Math.abs(state.y-9)<=2){heal();return}
+const i=GYMS.findIndex(g=>Math.abs(state.x-g.x)<=2&&Math.abs(state.y-(g.y+1))<=1);
+if(i===-1){toast('Walk to a gym door and press E. Explore tall grass for wild creatures.');return}
+if(i>0){regionNotice('Gym relocated',GYMS[i].leader+' now welcomes challengers on Route '+(i+3)+'. Follow the expanded region map!');return}
+talkLeader(LEADERS[i]);
+}
+function challengeGym(i){
+if(evolving||battle||!state.team.length)return;
+if(state.scene==='commons'&&i>0){toast('This gym has moved to Route '+(i+3)+'.');return}
+if(i<state.badges){toast(`${GYMS[i].name} badge earned. Your next gym is ${state.badges<8?GYMS[state.badges].name:'already conquered — champion!'}`);return}
+if(i>state.badges){toast(`Earn the ${GYMS[state.badges].name} badge first! Follow the numbered gyms.`);return}
+if(!state.team.some(m=>m.hp>0)){toast('Your team needs a rest. Use Heal team.');return}
+const g=GYMS[i];beginBattle(g.species.map((s,j)=>trainedMon(s,Math.min(50,g.level+j))),i);
+}
+function move(dx,dy){if(evolving||!state.adventureStarted||battle||!$('intro').classList.contains('hidden')||!$('modal').classList.contains('hidden'))return;if(state.scene!=='commons'){moveRegion(dx,dy);return}const x=state.x+dx,y=state.y+dy;if(blocked(x,y))return;state.x=x;state.y=y;walkFrame+=1;audio.play(isGrass(x,y)?'grass':'step');save();const nearest=GYMS.find(g=>Math.abs(g.x-x)<4&&Math.abs(g.y-y)<3);$('area').textContent=nearest?nearest.name+' Gym':'Willow Commons';$('area-sub').textContent=nearest?nearest.type+' territory · E to challenge':'Tall grass hides new friends.';if(isGrass(x,y)&&Math.random()<.16&&state.team.some(m=>m.hp>0)){const level=Math.max(2,Math.min(20,state.badges*2+3+Math.floor(Math.random()*3)));const pool=Math.min(8,3+state.badges);beginBattle([makeMon(Math.floor(Math.random()*pool),level)],null)}}
+function advantage(a,b){const strong={Leaf:['Water','Stone'],Flame:['Leaf','Frost'],Water:['Flame','Stone'],Stone:['Spark','Flame'],Spark:['Water','Star'],Frost:['Leaf','Shade'],Shade:['Star','Spark'],Star:['Shade','Stone']};return strong[a].includes(b)?1.5:strong[b].includes(a)?.75:1}
+function lead(){return state.team[battle.active]}
+function foe(){return battle.enemies[battle.enemyIndex]}
+function beginBattle(enemies,gym,trainer=null){
+if(evolving)return;
+const active=state.team.findIndex(m=>m.hp>0);if(active<0){toast('Your team needs healing before another battle.');return}
+held.clear();effect=null;battle={enemies,enemyIndex:0,active,gym,trainer,ball:'normal',turn:0};recordSeen(enemies);audio.setMode(gym===null?'battle':'gym');audio.play('encounter');busy=false;$('battle').classList.remove('hidden');$('toast').textContent='';battleUI();battleMessage(trainer?`${trainer.name} challenges you with ${enemies.length} companions! No catching another trainer’s creatures.`:gym===null?SPECIES[foe().species].legendary?`The legendary ${SPECIES[foe().species].name} emerged! Weaken it for a much easier catch. Great Balls are especially effective; Master Balls never fail.`:`A wild ${SPECIES[foe().species].name} appeared! Weaken it, then throw a ball.`:`Leader ${GYMS[gym].leader} challenges you! ${enemies.length} opponent${enemies.length>1?'s':''} to defeat.`);drawBattle();
+}
+function battleMessage(text){$('battle-message').textContent=text}
+function battleUI(){
+if(!battle)return;const a=lead(),e=foe(),as=SPECIES[a.species],es=SPECIES[e.species];
+$('enemy-name').textContent=es.name;$('enemy-level').textContent='LV. '+e.level;$('enemy-type').textContent=es.type+(battle.gym!==null||battle.trainer?` · ${battle.enemyIndex+1}/${battle.enemies.length}`:es.legendary?' · LEGENDARY':' · WILD');
+$('enemy-hp').style.width=e.hp/maxHP(e)*100+'%';$('ally-name').textContent=as.name;$('ally-level').textContent='LV. '+a.level;$('ally-hp').style.width=a.hp/maxHP(a)*100+'%';$('ally-health').textContent=a.hp+' / '+maxHP(a)+' HP';
+const moves={Leaf:'Vine Flick',Flame:'Ember Pounce',Water:'Bubble Rush',Stone:'Pebble Crash',Spark:'Volt Dash',Frost:'Frost Puff',Shade:'Dusk Wing',Star:'Starfall'};
+if(as.signature)moves[as.type]=as.signature;
+$('battle-controls').innerHTML=`<button class="btn move" data-action="attack">${moves[as.type]}<small>${as.type.toUpperCase()} · POWER 20</small></button><button class="btn move" data-action="tackle">Tackle<small>NEUTRAL · POWER 17</small></button><button class="btn move" data-action="potion">Potion (${state.potions})<small>RESTORE ${Math.max(55,Math.round(maxHP(a)*.45))} HP</small></button><button class="btn move" data-action="${isWildBattle()?'catch':'switch'}">${isWildBattle()?'Throw ball':'Switch'}<small>${isWildBattle()?'SELECT BALL BELOW':'NEXT COMPANION'}</small></button>`;
+if(isWildBattle()){
+const select=document.createElement('select');select.id='battle-ball';select.className='btn move';select.setAttribute('aria-label','Choose capture ball');
+for(const [id,item] of Object.entries(BALLS)){const option=document.createElement('option');option.value=id;option.textContent=item.name+' ('+(state[item.key]||0)+')';select.appendChild(option)}
+select.value=battle.ball;select.disabled=busy;select.onchange=()=>{battle.ball=select.value};$('battle-controls').appendChild(select);
+for(const [action,label] of [['switch','Switch'],['run','Run away']]){const button=document.createElement('button');button.className='btn move';button.dataset.action=action;button.textContent=label;$('battle-controls').appendChild(button)}
+}
+$('battle-controls').querySelectorAll('button').forEach(btn=>btn.disabled=busy);
+renderUI();drawBattle();
+}
+function drawBattle(time=performance.now()){
+if(!battle)return;
+const c=bctx,fx=effect,p=fx?Math.min(1,Math.max(0,(time-fx.start)/fx.duration)):0,motion=!reducedMotion.matches;
+const target=fx&&fx.target==='ally'?{x:245,y:285}:{x:700,y:160},source=fx&&fx.target==='ally'?{x:700,y:160}:{x:245,y:285};
+c.clearRect(0,0,960,400);c.save();
+if(fx&&fx.kind==='hit'&&motion)c.translate(Math.sin(p*65)*8*(1-p),Math.cos(p*53)*4*(1-p));
+for(let i=0;i<19;i++){const x=i*57,h=22+(i*17)%45;rect(c,x,215-h,42,h,'#789a7d26');rect(c,x+9,203-h,24,12,'#789a7d26');rect(c,x+15,194-h,12,10,'#789a7d26')}
+rect(c,0,227,960,3,'#73905f33');rect(c,0,240,960,2,'#d5dda044');
+for(let i=0;i<25;i++){const x=(i*139)%960,y=245+(i*37)%155;rect(c,x,y,7,2,'#71915d33');rect(c,x+2,y-3,2,4,'#71915d33')}
+c.fillStyle='#719568';c.beginPath();c.ellipse(700,225,145,30,0,0,Math.PI*2);c.fill();c.fillStyle='#8aac70';c.beginPath();c.ellipse(245,365,175,36,0,0,Math.PI*2);c.fill();
+c.strokeStyle='#d2dfa577';c.lineWidth=3;c.beginPath();c.ellipse(700,223,138,25,0,0,Math.PI*2);c.stroke();c.beginPath();c.ellipse(245,362,165,30,0,0,Math.PI*2);c.stroke();
+for(const side of ['enemy','ally']){
+const enemy=side==='enemy',m=enemy?foe():lead(),legendary=SPECIES[m.species].legendary;let x=enemy?700:245,y=enemy?193:legendary?322:316,scale=legendary?(enemy?3.4:5.4):enemy?(SPECIES[m.species].stage===2?4.2:5):7;
+if(motion){y+=Math.sin(time/330+(enemy?0:2))*5;scale*=1+Math.sin(time/470+(enemy?0:2))*.012}
+if(fx&&motion){
+ if((fx.kind==='attack'||fx.kind==='tackle')&&fx.target!==side){const pose=attackPose(fx.kind,p);x+=(enemy?-455:455)*pose.travel;y+=(enemy?125:-125)*pose.travel-pose.lift;scale*=pose.squash}
+ if(fx.target===side&&fx.kind==='hit'){x+=(enemy?1:-1)*Math.sin(p*Math.PI)*22;y-=Math.sin(p*Math.PI)*9}
+ if(fx.target===side&&fx.kind==='faint'){y+=p*60;scale*=1-p*.5}
+ if(fx.kind==='switch'&&side==='ally')scale*=.3+.7*Math.sin(p*Math.PI/2);
+ if(fx.kind==='catch'&&side==='enemy'&&p>.35)scale*=Math.max(0,1-(p-.35)*5);
+ if(fx.kind==='wobble'&&side==='enemy')scale=0;
+}
+c.save();if(fx&&fx.target===side&&fx.kind==='hit')c.globalAlpha=Math.floor(p*9)%2===0?.35:1;
+if(fx&&fx.target===side&&fx.kind==='faint')c.globalAlpha=1-p;
+if(m.hp>0||fx&&fx.kind==='faint'&&fx.target===side)creature(c,m.species,x,y,scale,!enemy);c.restore();
+}
+if(fx){
+const color=TYPES[fx.type]||'#f4ce79';
+if(fx.kind==='attack'){
+ const attacker=SPECIES[(fx.target==='enemy'?lead():foe()).species];
+ if(attacker.legendary&&fx.type===attacker.type)drawLegendaryAttack(c,attacker,source,target,p,motion);
+}
+if(fx.kind==='attack'||fx.kind==='tackle')drawMoveAnimation(c,fx.type,source,target,p,motion,fx.kind);
+if(fx.kind==='hit'||fx.kind==='caught'||fx.kind==='victory'||fx.kind==='heal'){
+for(let i=0;i<(motion?22:4);i++){const a=i*2.399,r=motion?20+p*100*(.4+i%4*.2):28;const x=target.x+Math.cos(a)*r,y=target.y+Math.sin(a)*r-(fx.kind==='heal'?p*95:0);c.globalAlpha=1-p*.8;sparkle(c,x,y,2+i%3,fx.kind==='heal'?'#dcffc4':i%2?color:'#fff3cc')}c.globalAlpha=1;
+if(fx.text){c.textAlign='center';c.font='bold 28px monospace';c.fillStyle='#263d35';c.fillText(fx.text,target.x+2,target.y-65-(motion?p*40:0)+2);c.fillStyle=fx.kind==='heal'?'#d8ffc0':'#fff2c4';c.fillText(fx.text,target.x,target.y-65-(motion?p*40:0))}
+}
+if(fx.kind==='catch'||fx.kind==='wobble'){
+const q=fx.kind==='catch'?Math.min(1,p*2.4):1,x=245+455*q,y=285-90*q-Math.sin(q*Math.PI)*155;
+c.save();c.translate(x,y);if(motion)c.rotate(fx.kind==='wobble'?Math.sin(p*25)*.3:p*10);rect(c,-13,-13,26,26,'#304c4a');rect(c,-10,-10,20,10,battle.ball==='master'?'#b18bc9':battle.ball==='great'?'#7facc4':'#e89974');rect(c,-10,1,20,9,'#f5edce');rect(c,-4,-4,8,8,'#304c4a');rect(c,-2,-2,4,4,'#f4ce79');c.restore();
+}
+}
+drawCelebration(c,time);c.restore();
+}
+const wait=ms=>new Promise(resolve=>setTimeout(resolve,ms));
+function damage(attacker,defender,power,typed=true){const mult=typed?advantage(SPECIES[attacker.species].type,SPECIES[defender.species].type):1;return Math.max(4,Math.round((power+attacker.level*2-defender.level*.65)*mult*(SPECIES[attacker.species].attackBonus||1)*(.9+Math.random()*.2)))}
+async function act(action){
+if(!battle||busy)return;
+if(!['attack','tackle','potion','switch','catch','run'].includes(action)){battleMessage('Choose one of the available battle actions.');return}
+const a=lead(),e=foe();let message='';
+if((action==='catch'||action==='run')&&!isWildBattle()){battleMessage('You cannot catch creatures or run from a trainer or gym battle.');return}
+if(action==='potion'&&(state.potions===0||a.hp===maxHP(a))){battleMessage(state.potions?'HP is already full.':'No potions left. Rest after this battle to refill.');return}
+if(action==='catch'&&!(state[BALLS[battle.ball].key]>0)){battleMessage('No '+BALLS[battle.ball].name+'s left. Choose another ball or visit a Grove Mart.');return}
+if(action==='switch'&&state.team.filter(m=>m.hp>0).length<2){battleMessage('No other healthy companion to switch to.');return}
+busy=true;battleUI();
+if(action==='run'){audio.play('run');battleMessage('You safely returned to the trail.');await wait(600);endBattle();return}
+if(action==='catch'){
+const selectedBall=battle.ball;state[BALLS[selectedBall].key]--;battleMessage('The '+BALLS[selectedBall].name+' wobbles…');await animateEffect('catch','enemy','Star','',800);await animateEffect('wobble','enemy','Star','',700);
+if(selectedBall==='master'||Math.random()<captureChance(e,selectedBall)){e.hp=maxHP(e);const stored=state.team.length>=6;if(stored){state.reserve??=[];state.reserve.push(e)}else state.team.push(e);if(battle.fishing)state.fishCaught=(state.fishCaught||0)+1;recordSeen([e]);battleMessage(`${SPECIES[e.species].name} ${stored?'went to Storage boxes! Open them to add or swap companions.':'joined your team!'}`);await animateEffect('caught','enemy','Star','CAUGHT!',1100);await evolveCompanions([e]);endBattle();return}
+message=SPECIES[e.species].name+' broke free!';
+}else if(action==='potion'){state.potions--;const recovered=Math.min(Math.max(55,Math.round(maxHP(a)*.45)),maxHP(a)-a.hp);a.hp+=recovered;battleUI();await animateEffect('heal','ally','Leaf','+'+recovered,750);message=`${SPECIES[a.species].name} recovered ${recovered} HP.`}
+else if(action==='switch'){let next=(battle.active+1)%state.team.length;while(state.team[next].hp<=0)next=(next+1)%state.team.length;battle.active=next;await animateEffect('switch','ally','Star','',550);message=`Go, ${SPECIES[lead().species].name}!`}
+else{
+await animateEffect(action==='tackle'?'tackle':'attack','enemy',action==='tackle'?'Stone':SPECIES[a.species].type,'',850);
+const hit=damage(a,e,action==='tackle'?17:20,action!=='tackle');e.hp=Math.max(0,e.hp-hit);battleUI();await animateEffect('hit','enemy',SPECIES[a.species].type,'−'+hit,500);const mult=action==='tackle'?1:advantage(SPECIES[a.species].type,SPECIES[e.species].type);message=`${SPECIES[a.species].name} dealt ${hit} damage!${mult>1?' Super effective!':mult<1?' Not very effective.':''}`;
+}
+battleMessage(message);battleUI();await wait(900);
+if(e.hp<=0){
+await animateEffect('faint','enemy',SPECIES[e.species].type,'',500);
+state.wins++;state.team.filter(m=>m.hp>0).forEach(m=>{const old=maxHP(m);m.level=Math.min(50,m.level+1);m.hp=Math.min(maxHP(m),m.hp+maxHP(m)-old+9)});
+await evolveCompanions();
+if(battle.enemyIndex+1<battle.enemies.length){battle.enemyIndex++;battleMessage(`${SPECIES[e.species].name} fainted! Your team leveled up. Here comes ${SPECIES[foe().species].name}!`);busy=false;battleUI();return}
+const gym=battle.gym,reward=battleRewards();if(gym!==null){state.badges++;state.orbs+=3;state.potions+=2;state.team.forEach(m=>{m.level=Math.min(50,Math.max(m.level,GYMS[gym].level+2));m.hp=maxHP(m)});await evolveCompanions()}
+battleMessage((gym===null?'Victory! Your healthy companions gained a level.':`${GYMS[gym].leader} defeated! You earned the ${GYMS[gym].name} badge. Team restored!`)+(reward?' Earned '+reward+' coins!':''));battleUI();audio.setMode('victory');celebrateUntil=performance.now()+(gym===null?1800:5000);if(gym!==null)$('badges').children[gym].classList.add('new-badge');await animateEffect('victory','ally','Star',gym===null?'LEVEL UP!':'BADGE EARNED!',1500);endBattle();
+if(state.badges===8&&gym===7)champion();else toast(reward?'Victory! +'+reward+' coins. Visit a Grove Mart for supplies.':gym===null?'A little stronger. A little closer to champion.':`${GYMS[gym].name} badge earned! Next: ${GYMS[state.badges].name} Gym.`);
+return;
+}
+const current=lead();
+if(battle.gym!==null&&e.hp<maxHP(e)*.3&&(battle.leaderHeals||0)<2){
+ battle.leaderHeals=(battle.leaderHeals||0)+1;const recovered=Math.min(Math.round(maxHP(e)*.5),maxHP(e)-e.hp);e.hp+=recovered;
+ battleMessage(GYMS[battle.gym].leader+' uses a leader potion! +'+recovered+' HP.');battleUI();await animateEffect('heal','enemy',SPECIES[e.species].type,'+'+recovered,750);
+}else{
+ const typed=battle.gym===null||advantage(SPECIES[e.species].type,SPECIES[current.species].type)>=1;
+ await animateEffect(typed?'attack':'tackle','ally',typed?SPECIES[e.species].type:'Stone','',850);const hit=damage(e,current,battle.gym===null?16:27,typed);current.hp=Math.max(0,current.hp-hit);battleMessage(`${SPECIES[e.species].name} ${typed&&SPECIES[e.species].signature?'unleashes '+SPECIES[e.species].signature:'strikes back'} for ${hit} damage.`);battleUI();await animateEffect('hit','ally',SPECIES[e.species].type,'−'+hit,650);
+}
+if(current.hp<=0){
+await animateEffect('faint','ally',SPECIES[current.species].type,'',500);
+const next=state.team.findIndex(m=>m.hp>0);
+if(next<0){battleMessage('Your team needs a rest. Returning to the Rest House…');await wait(1200);respawnRegion();state.team.forEach(m=>m.hp=maxHP(m));state.potions=Math.max(5,state.potions);state.orbs=Math.max(6,state.orbs);endBattle();toast('Rested and ready. No badges or companions lost!');return}
+battle.active=next;await animateEffect('switch','ally','Star','',450);battleMessage(`${SPECIES[current.species].name} fainted. Go, ${SPECIES[lead().species].name}!`);
+}else battleMessage(`What will ${SPECIES[current.species].name} do?`);
+busy=false;battleUI();save();
+}
+function endBattle(){battle=null;effect=null;busy=false;audio.setMode('grove');$('battle').classList.add('hidden');renderUI();save();canvas.focus()}
+function champion(){$('modal-content').innerHTML='<div class="eyebrow">THE GROVE LEAGUE HALL OF FAME</div><div style="font-size:65px;color:#f4ce79">✦</div><h1>A champion, at last.</h1><p>Eight leaders defeated. Eight badges earned. You and your companions made your own little legend.</p><p id="hall-team"></p><button class="btn primary" id="keep-playing">Keep exploring</button>';$('hall-team').textContent=state.team.map(m=>SPECIES[m.species].name+' · Lv. '+m.level).join(' / ');$('modal').classList.remove('hidden');$('keep-playing').onclick=()=>{$('modal').classList.add('hidden');canvas.focus()}}
+function reset(){$('modal-content').innerHTML='<h1>A fresh adventure?</h1><p>This replaces your saved companions and badges. Your current adventure cannot be recovered.</p><div class="actions"><button class="btn" id="cancel-reset">Keep my adventure</button><button class="btn primary" id="confirm-reset">Start fresh</button></div>';$('modal').classList.remove('hidden');$('cancel-reset').onclick=()=>$('modal').classList.add('hidden');$('confirm-reset').onclick=()=>{state={team:[],badges:0,x:24,y:86,scene:'region',regionVersion:1,orbs:0,potions:5,wins:0};visualX=state.x*32;visualY=state.y*32;initializeAdventure();try{localStorage.removeItem(SAVE)}catch(error){storageAvailable=false;toast('Browser storage is unavailable. This adventure cannot be saved.')}held.clear();$('modal').classList.add('hidden');$('intro').classList.remove('hidden');$('quest').textContent='Visit Professor Mina to choose your first partner.';renderUI()}}
+$('begin-adventure').onclick=start;
+const directions={ArrowUp:[0,-1],w:[0,-1],ArrowDown:[0,1],s:[0,1],ArrowLeft:[-1,0],a:[-1,0],ArrowRight:[1,0],d:[1,0]};
+window.addEventListener('keydown',event=>{if(evolving||event.target instanceof HTMLElement&&event.target.closest('input,select,textarea'))return;const key=event.key.length===1?event.key.toLowerCase():event.key;if(directions[key]){event.preventDefault();held.add(key)}if(key==='e'&&!event.repeat)interact();if(key==='f'&&!event.repeat){event.preventDefault();fish()}if(key==='m'&&!event.repeat){event.preventDefault();toggleWorldMap()}});
+window.addEventListener('keyup',event=>held.delete(event.key.length===1?event.key.toLowerCase():event.key));
+window.addEventListener('blur',()=>held.clear());
+document.addEventListener('visibilitychange',()=>{if(document.hidden)held.clear()});
+document.querySelectorAll('[data-dir]').forEach(button=>{const key={left:'ArrowLeft',right:'ArrowRight',up:'ArrowUp',down:'ArrowDown'}[button.dataset.dir];button.addEventListener('pointerdown',event=>{event.preventDefault();button.setPointerCapture(event.pointerId);held.add(key);stepClock=150});for(const type of ['pointerup','pointercancel','lostpointercapture'])button.addEventListener(type,()=>held.delete(key))});
+$('interact').onclick=interact;$('heal').onclick=heal;$('reset').onclick=()=>{if(evolving||battle)return;reset()};
+$('team-switch').onclick=()=>{if(evolving||battle||state.team.length<2)return;state.team.push(state.team.shift());renderUI();save();toast(SPECIES[state.team[0].species].name+' is now your lead companion.')};
+$('battle-controls').addEventListener('click',event=>{const button=event.target.closest('button[data-action]');if(button)act(button.dataset.action).catch(error=>{console.error('Pocketgrove battle error:',error);battleMessage('The battle could not continue. Your adventure was restored to the map.');endBattle();toast('Battle interrupted by an error. Your current adventure has been saved.')})});
+function frame(time){const dt=Math.min(time-lastTime,100);lastTime=time;stepClock+=dt;if(held.size&&stepClock>=145){stepClock=0;const dir=directions[held.values().next().value];if(dir)move(...dir)}const blend=reducedMotion.matches?1:1-Math.exp(-dt/42);visualX+=(state.x*32-visualX)*blend;visualY+=(state.y*32-visualY)*blend;if(battle)drawBattle(time);else drawWorld(time);updateMapHud(time);drawEvolution(time);if(effect&&time-effect.start>=effect.duration)effect=null;requestAnimationFrame(frame)}
+</script>
+<script src="pocketgrove-creatures.js"></script>
+<script src="pocketgrove-journey.js"></script>
+<script src="pocketgrove-region.js"></script>
+<script src="pocketgrove-adventure.js"></script>
+<script src="pocketgrove-battle-fx.js"></script>
+<script>
+consumeFreshStart();load();initializeAdventure();consumePowerGift();if(blocked(state.x,state.y)){respawnRegion();save()}visualX=state.x*32;visualY=state.y*32;initAudio();$('roster-summary').textContent=SPECIES.length+' original creatures and evolved forms. 3 hidden legends. Your adventure saves automatically.';renderUI();evolveCompanions(ownedCreatures()).catch(error=>{console.error('Pocketgrove evolution failed:',error);toast('Evolution animation was interrupted. Your companions have been saved.')});requestAnimationFrame(frame);
+</script>
+</body>
+</html>
